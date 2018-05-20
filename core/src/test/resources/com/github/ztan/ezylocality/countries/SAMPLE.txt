@@ -1,0 +1,34 @@
+AU	5414	Manoora	South Australia	SA	SA FAR				-34	138.8167	4
+AU	5415	Mintaro	South Australia	SA	SA FAR				-33.9173	138.7215	4
+AU	5415	Stanley	South Australia	SA					-33.9167	138.7167	3
+AU	5416	Farrell Flat	South Australia	SA	SA FAR				-33.8295	138.7927	1
+AU	5416	Porter Lagoon	South Australia	SA					-33.8857	138.8563	1
+AU	5417	Mongolata	South Australia	SA					-33.5667	139.1	4
+AU	5417	Leighton	South Australia	SA					-33.65	138.75	4
+AU	5417	Burra	South Australia	SA	SA FAR				-33.6717	138.9283	4
+AU	5417	Burra Eastern Districts	South Australia	SA					-33.6138	138.8821	3
+AU	5417	Booborowie	South Australia	SA	SA FAR				-33.5667	138.75	4
+AU	5417	Gum Creek	South Australia	SA					-33.6138	138.8821	3
+AU	5417	Hanson	South Australia	SA					-33.6138	138.8821	3
+AU	5417	Koonoona	South Australia	SA					-33.6138	138.8821	3
+AU	5417	Baldina	South Australia	SA					-33.6138	138.8821	3
+AU	5417	North Booborowie	South Australia	SA					-33.6138	138.8821	3
+AU	5418	Mount Bryan	South Australia	SA	SA FAR				-33.4047	139.0184	4
+AU	6111	Canning Mills	Western Australia	WA	TANGNEY				-32.0804	116.1047	4
+AU	6111	Karragullen	Western Australia	WA	TANGNEY				-32.1	116.1333	4
+AU	6111	Ashendon	Western Australia	WA					-32.1831	116.1341	4
+AU	6111	Roleystone	Western Australia	WA	TANGNEY				-32.1146	116.0706	4
+AU	6112	Hilbert	Western Australia	WA					-32.1782	115.9849	4
+AU	6112	Seville Grove	Western Australia	WA	TANGNEY				-32.1364	115.989	4
+AU	6112	Mount Nasura	Western Australia	WA	TANGNEY				-32.1378	116.0247	4
+AU	6112	Harrisdale	Western Australia	WA					-32.1108	115.9356	4
+AU	6112	Armadale	Western Australia	WA	TANGNEY				-32.1461	116.0093	4
+AU	6112	Bedfordale	Western Australia	WA	TANGNEY				-32.1741	116.0504	4
+AU	6112	Forrestdale	Western Australia	WA	TANGNEY				-32.1552	115.9342	4
+AU	6112	Wungong	Western Australia	WA	TANGNEY				-32.1802	116.0095	4
+AU	6112	Brookdale	Western Australia	WA	TANGNEY				-32.167	116.0019	4
+AU	6112	Piara Waters	Western Australia	WA					-32.1334	115.9163	4
+AU	6112	Haynes	Western Australia	WA					-32.162	115.9815	4
+AU	6112	Mount Richon	Western Australia	WA	TANGNEY				-32.1735	116.0214	4
+AU	6121	Oakford	Western Australia	WA	TANGNEY				-32.2009	115.9339	4
+AU	6121	Oldbury	Western Australia	WA	TANGNEY				-32.2657	115.9183	4
