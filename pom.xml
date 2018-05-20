@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.ztan.ezy-locality</groupId>
 	<artifactId>ezy-locality-pom</artifactId>
@@ -97,7 +99,7 @@
 		<module>countries/za</module>
 	</modules>
 	<!-- FIXME change it to the project's website -->
-	<url />
+	<url>https://github.com/ztan/ezy-locality</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -322,9 +324,10 @@
 	<description>This project packages postal areas information downloaded from [geonames.org]: http://download.geonames.org/export/zip/ into a simple Java utility, which is suited for small projects to implement postcode search functionality without needing to rely on the web services provided by geonames.org.</description>
 	<scm>
 		<connection>scm:git:https://github.com/ztan/ezy-locality.git</connection>
-		<url>https://github.com/ztan/ezy-locality.git</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<url>https://github.com/ztan/ezy-locality/tree/master</url>
+		<tag>HEAD</tag>
+		<developerConnection>scm:git:ssh://github.com:ztan/ezy-locality.git</developerConnection>
+	</scm>
 	<issueManagement>
 		<url>https://github.com/ztan/ezy-locality/issues</url>
 	</issueManagement>
@@ -338,4 +341,18 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
+	<licenses>
+		<license>
+			<name>The MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Zhendong Tan</name>
+			<email>ztan@bravurasolutions.com</email>
+			<organization>Bravura Solutions</organization>
+			<organizationUrl>http://bravurasolutions.com/</organizationUrl>
+		</developer>
+	</developers>
 </project>
