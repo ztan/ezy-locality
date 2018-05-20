@@ -319,6 +319,17 @@
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<goals>deploy</goals>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<description>This project packages postal areas information downloaded from [geonames.org]: http://download.geonames.org/export/zip/ into a simple Java utility, which is suited for small projects to implement postcode search functionality without needing to rely on the web services provided by geonames.org.</description>
@@ -326,7 +337,6 @@
 		<connection>scm:git:https://github.com/ztan/ezy-locality.git</connection>
 		<url>https://github.com/ztan/ezy-locality/tree/master</url>
 		<tag>HEAD</tag>
-		<developerConnection>scm:git:ssh://github.com:ztan/ezy-locality.git</developerConnection>
 	</scm>
 	<issueManagement>
 		<url>https://github.com/ztan/ezy-locality/issues</url>
