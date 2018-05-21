@@ -96,7 +96,6 @@
 		<module>countries/yt</module>
 		<module>countries/za</module>
 	</modules>
-	<!-- FIXME change it to the project's website -->
 	<url>https://github.com/ztan/ezy-locality</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
