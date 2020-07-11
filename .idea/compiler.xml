@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ezy-locality-es" />
+        <module name="ezy-locality-mx" />
+        <module name="ezy-locality-jp" />
+        <module name="ezy-locality-nc" />
+        <module name="ezy-locality-sk" />
+        <module name="ezy-locality-za" />
+        <module name="ezy-locality-je" />
+        <module name="ezy-locality-dz" />
+        <module name="ezy-locality-tr" />
+        <module name="ezy-locality-im" />
+        <module name="ezy-locality-dk" />
+        <module name="ezy-locality-yt" />
+        <module name="ezy-locality-do" />
+        <module name="ezy-locality-th" />
+        <module name="ezy-locality-it" />
+        <module name="ezy-locality-is" />
+        <module name="ezy-locality-nz" />
+        <module name="ezy-locality-all-countries" />
+        <module name="ezy-locality-in" />
+        <module name="ezy-locality-de" />
+        <module name="ezy-locality-core" />
+        <module name="ezy-locality-no" />
+        <module name="ezy-locality-ie" />
+        <module name="ezy-locality-nl" />
+        <module name="ezy-locality-cz" />
+        <module name="ezy-locality-pr" />
+        <module name="ezy-locality-sm" />
+        <module name="ezy-locality-cr" />
+        <module name="ezy-locality-sj" />
+        <module name="ezy-locality-si" />
+        <module name="ezy-locality-co" />
+        <module name="ezy-locality-hu" />
+        <module name="ezy-locality-se" />
+        <module name="ezy-locality-hr" />
+        <module name="ezy-locality-my" />
+        <module name="ezy-locality-ch" />
+        <module name="ezy-locality-mt" />
+        <module name="ezy-locality-ca" />
+        <module name="ezy-locality-mp" />
+        <module name="ezy-locality-pk" />
+        <module name="ezy-locality-pl" />
+        <module name="ezy-locality-ru" />
+        <module name="ezy-locality-mk" />
+        <module name="ezy-locality-by" />
+        <module name="ezy-locality-ar" />
+        <module name="ezy-locality-ro" />
+        <module name="ezy-locality-md" />
+        <module name="ezy-locality-br" />
+        <module name="ezy-locality-gu" />
+        <module name="ezy-locality-re" />
+        <module name="ezy-locality-ax" />
+        <module name="ezy-locality-gp" />
+        <module name="ezy-locality-bg" />
+        <module name="ezy-locality-lv" />
+        <module name="ezy-locality-wf" />
+        <module name="ezy-locality-bd" />
+        <module name="ezy-locality-anglosphere" />
+        <module name="ezy-locality-gf" />
+        <module name="ezy-locality-bm" />
+        <module name="ezy-locality-gt" />
+        <module name="ezy-locality-gb" />
+        <module name="ezy-locality-li" />
+        <module name="ezy-locality-ua" />
+        <module name="ezy-locality-au" />
+        <module name="ezy-locality-at" />
+        <module name="ezy-locality-as" />
+        <module name="ezy-locality-gg" />
+        <module name="ezy-locality-gl" />
+        <module name="ezy-locality-lk" />
+        <module name="ezy-locality-lt" />
+        <module name="ezy-locality-be" />
+        <module name="ezy-locality-fr" />
+        <module name="ezy-locality-vi" />
+        <module name="ezy-locality-fo" />
+        <module name="ezy-locality-fm" />
+        <module name="ezy-locality-ad" />
+        <module name="ezy-locality-fi" />
+        <module name="ezy-locality-va" />
+        <module name="ezy-locality-mc" />
+        <module name="ezy-locality-pt" />
+        <module name="ezy-locality-mh" />
+        <module name="ezy-locality-uy" />
+        <module name="ezy-locality-pm" />
+        <module name="ezy-locality-lu" />
+        <module name="ezy-locality-us" />
+        <module name="ezy-locality-pw" />
+        <module name="ezy-locality-mq" />
+        <module name="ezy-locality-ph" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ezy-locality-ad" target="1.8" />
+      <module name="ezy-locality-all-countries" target="1.8" />
+      <module name="ezy-locality-anglosphere" target="1.8" />
+      <module name="ezy-locality-ar" target="1.8" />
+      <module name="ezy-locality-as" target="1.8" />
+      <module name="ezy-locality-at" target="1.8" />
+      <module name="ezy-locality-au" target="1.8" />
+      <module name="ezy-locality-ax" target="1.8" />
+      <module name="ezy-locality-bd" target="1.8" />
+      <module name="ezy-locality-be" target="1.8" />
+      <module name="ezy-locality-bg" target="1.8" />
+      <module name="ezy-locality-bm" target="1.8" />
+      <module name="ezy-locality-br" target="1.8" />
+      <module name="ezy-locality-by" target="1.8" />
+      <module name="ezy-locality-ca" target="1.8" />
+      <module name="ezy-locality-ch" target="1.8" />
+      <module name="ezy-locality-co" target="1.8" />
+      <module name="ezy-locality-core" target="1.8" />
+      <module name="ezy-locality-cr" target="1.8" />
+      <module name="ezy-locality-cz" target="1.8" />
+      <module name="ezy-locality-de" target="1.8" />
+      <module name="ezy-locality-dk" target="1.8" />
+      <module name="ezy-locality-do" target="1.8" />
+      <module name="ezy-locality-dz" target="1.8" />
+      <module name="ezy-locality-es" target="1.8" />
+      <module name="ezy-locality-fi" target="1.8" />
+      <module name="ezy-locality-fm" target="1.8" />
+      <module name="ezy-locality-fo" target="1.8" />
+      <module name="ezy-locality-fr" target="1.8" />
+      <module name="ezy-locality-gb" target="1.8" />
+      <module name="ezy-locality-gf" target="1.8" />
+      <module name="ezy-locality-gg" target="1.8" />
+      <module name="ezy-locality-gl" target="1.8" />
+      <module name="ezy-locality-gp" target="1.8" />
+      <module name="ezy-locality-gt" target="1.8" />
+      <module name="ezy-locality-gu" target="1.8" />
+      <module name="ezy-locality-hr" target="1.8" />
+      <module name="ezy-locality-hu" target="1.8" />
+      <module name="ezy-locality-ie" target="1.8" />
+      <module name="ezy-locality-im" target="1.8" />
+      <module name="ezy-locality-in" target="1.8" />
+      <module name="ezy-locality-is" target="1.8" />
+      <module name="ezy-locality-it" target="1.8" />
+      <module name="ezy-locality-je" target="1.8" />
+      <module name="ezy-locality-jp" target="1.8" />
+      <module name="ezy-locality-li" target="1.8" />
+      <module name="ezy-locality-lk" target="1.8" />
+      <module name="ezy-locality-lt" target="1.8" />
+      <module name="ezy-locality-lu" target="1.8" />
+      <module name="ezy-locality-lv" target="1.8" />
+      <module name="ezy-locality-mc" target="1.8" />
+      <module name="ezy-locality-md" target="1.8" />
+      <module name="ezy-locality-mh" target="1.8" />
+      <module name="ezy-locality-mk" target="1.8" />
+      <module name="ezy-locality-mp" target="1.8" />
+      <module name="ezy-locality-mq" target="1.8" />
+      <module name="ezy-locality-mt" target="1.8" />
+      <module name="ezy-locality-mx" target="1.8" />
+      <module name="ezy-locality-my" target="1.8" />
+      <module name="ezy-locality-nc" target="1.8" />
+      <module name="ezy-locality-nl" target="1.8" />
+      <module name="ezy-locality-no" target="1.8" />
+      <module name="ezy-locality-nz" target="1.8" />
+      <module name="ezy-locality-ph" target="1.8" />
+      <module name="ezy-locality-pk" target="1.8" />
+      <module name="ezy-locality-pl" target="1.8" />
+      <module name="ezy-locality-pm" target="1.8" />
+      <module name="ezy-locality-pom" target="1.8" />
+      <module name="ezy-locality-pr" target="1.8" />
+      <module name="ezy-locality-pt" target="1.8" />
+      <module name="ezy-locality-pw" target="1.8" />
+      <module name="ezy-locality-re" target="1.8" />
+      <module name="ezy-locality-ro" target="1.8" />
+      <module name="ezy-locality-ru" target="1.8" />
+      <module name="ezy-locality-se" target="1.8" />
+      <module name="ezy-locality-si" target="1.8" />
+      <module name="ezy-locality-sj" target="1.8" />
+      <module name="ezy-locality-sk" target="1.8" />
+      <module name="ezy-locality-sm" target="1.8" />
+      <module name="ezy-locality-th" target="1.8" />
+      <module name="ezy-locality-tr" target="1.8" />
+      <module name="ezy-locality-ua" target="1.8" />
+      <module name="ezy-locality-us" target="1.8" />
+      <module name="ezy-locality-uy" target="1.8" />
+      <module name="ezy-locality-va" target="1.8" />
+      <module name="ezy-locality-vi" target="1.8" />
+      <module name="ezy-locality-wf" target="1.8" />
+      <module name="ezy-locality-yt" target="1.8" />
+      <module name="ezy-locality-za" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
