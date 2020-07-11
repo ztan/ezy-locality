@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.ztan.ezy-locality</groupId>
 	<artifactId>ezy-locality-pom</artifactId>
-	<version>0.2.0</version>
+	<version>0.2.1-SNAPSHOT</version>
 	<name>ezy-locality-pom</name>
 	<packaging>pom</packaging>
 	<modules>
@@ -336,7 +336,7 @@
 	<scm>
 		<connection>scm:git:https://github.com/ztan/ezy-locality.git</connection>
 		<url>https://github.com/ztan/ezy-locality/tree/master</url>
-		<tag>ezy-locality-pom-0.2.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 	<issueManagement>
 		<url>https://github.com/ztan/ezy-locality/issues</url>
