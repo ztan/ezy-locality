@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeout;
 
 import java.time.Duration;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -22,7 +23,7 @@ public class AULocalityStoreTest {
 	void testRepeatedAccess() {
 		LocalityStore auLocalities = new LocalityStore("AU");
 
-		String input = "5" + String.valueOf(rand.nextInt(1000));
+		String input = "5" + rand.nextInt(1000);
 		List<Map<String, String>> results = assertTimeout(Duration.ofMillis(150),
 				() -> auLocalities.search(input).limit(10).collect(Collectors.toList()));
 		System.out.println(" ==== search for post code " + input + " ====");
@@ -38,5 +39,20 @@ public class AULocalityStoreTest {
 		Map<String, String> item = results.iterator().next();
 		assertEquals("Adelaide", item.get("place_name"));
 		assertEquals("SA", item.get("admin_code1"));
+
+	}
+
+	@Test
+	void testRanked() {
+
+		LocalityStore auLocalities = new LocalityStore("AU");
+
+		List<Map<String, String>> results = auLocalities.search("adelaide", true)
+				.sorted(Comparator.comparing(m -> m.get("rank"))).limit(20).collect(Collectors.toList());
+
+		System.out.println(" ==== adelaide ====");
+		results.forEach(System.out::println);
+		Map<String, String> item = results.iterator().next();
+		assertEquals("Adelaide Lead", item.get("place_name"));
 	}
 }

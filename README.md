@@ -8,7 +8,7 @@ Add the following dependency to your projects pom.xml
 <dependency>
 	<groupId>com.github.ztan.ezy-locality</groupId>
 	<artifactId>ezy-locality-core</artifactId>
-	<version>0.1.6</version>
+	<version>0.2.0</version>
 </dependency>
 
 ```
@@ -19,7 +19,7 @@ You will also need to list at least one of the country specific packages in the 
 <dependency>
 	<groupId>com.github.ztan.ezy-locality</groupId>
 	<artifactId>ezy-locality-au</artifactId>
-	<version>0.1.6</version>
+	<version>0.2.0</version>
 </dependency>
 ```
 
@@ -28,7 +28,7 @@ Alternatively, you can add one of the 'shaded' collections in the dependencies, 
 <dependency>
 	<groupId>com.github.ztan.ezy-locality</groupId>
 	<artifactId>ezy-locality-anglosphere</artifactId>
-	<version>0.1.6</version>
+	<version>0.2.0</version>
 </dependency>
 
 ```

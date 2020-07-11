@@ -25,9 +25,8 @@ import java.util.stream.StreamSupport;
  * A simple Java utility for postcode lookup, based on data exported from
  * geonames.org. Each <code>LocalityStore</code> contain postal geo data of a
  * specific country.
- * 
- * @author ztan
  *
+ * @author ztan
  */
 public class LocalityStore {
 
@@ -40,9 +39,12 @@ public class LocalityStore {
 	private static final List<String> SEARCH_COLUMNS = Arrays.asList("postal_code", "place_name", "admin_name1",
 			"admin_code1", "admin_name2", "admin_code2", "admin_name3", "admin_code3");
 
+	private static final List<String> RANK_COLUMNS = Arrays.asList("postal_code", "place_name", "admin_name1",
+			"admin_name2", "admin_name3");
+
 	private static final String CSV_COLUMNS = COLUMNS.stream().map(c -> "'" + c.toUpperCase() + "'")
 			.collect(Collectors.joining("||CHAR(9)||"));
-	private static final String SELECT_COLUMNS = COLUMNS.stream().collect(Collectors.joining(", "));
+	private static final String SELECT_COLUMNS = String.join(", ", COLUMNS);
 
 	private static final List<String> ALL_SUPPORTED_COUNTRIES = Arrays.asList("AD", "AR", "AS", "AT", "AU", "AX", "BD",
 			"BE", "BG", "BM", "BR", "BY", "CA", "CH", "CO", "CR", "CZ", "DE", "DK", "DO", "DZ", "ES", "FI", "FM", "FO",
@@ -55,14 +57,12 @@ public class LocalityStore {
 	private final String selectAllStatement;
 	private final String selectCountStatement;
 
-	private static boolean assertDriver() {
+	private static void assertDriver() {
 		try {
 			Class.forName("org.h2.Driver");
 		} catch (ClassNotFoundException e) {
 			log.warning("H2 driver not found. Locality store disabled");
-			return false;
 		}
-		return true;
 	}
 
 	private static String getCsvFilePath(String code) {
@@ -78,7 +78,7 @@ public class LocalityStore {
 
 	private static URL getDataResource(String code) {
 		List<String> paths = Arrays.asList(LocalityStore.class.getPackage().getName().split("\\."));
-		String parentPath = paths.subList(0, paths.size() - 1).stream().collect(Collectors.joining("/"));
+		String parentPath = String.join("/", paths.subList(0, paths.size() - 1));
 
 		return LocalityStore.class.getResource("/" + parentPath + "/countries/" + code + ".txt");
 	}
@@ -87,7 +87,7 @@ public class LocalityStore {
 	 * Gets the supported countries. In order to load the dataset for a certain
 	 * country, add the package {@code ezy-locality-<country code> } to the
 	 * classpath.
-	 * 
+	 *
 	 * @return a <code>Set</code> instance of country codes
 	 */
 	public static Set<String> supportedCountries() {
@@ -104,9 +104,8 @@ public class LocalityStore {
 
 	/**
 	 * Constructs a locality store.
-	 * 
-	 * @param countryCode
-	 *            an ISO 3166-1 country code
+	 *
+	 * @param countryCode an ISO 3166-1 country code
 	 */
 	public LocalityStore(String countryCode) {
 		assertDriver();
@@ -128,14 +127,28 @@ public class LocalityStore {
 	 * Searches for a given term (<code>text</code>) in the country data. Note: this
 	 * is not fulltext search and the order of the results are based on their
 	 * appearances in the data file.
-	 * 
-	 * @param text
-	 *            the search term
+	 *
+	 * @param text the search term
 	 * @return a <code>Stream</code> instance backed by a query result set. Each
-	 *         element of the stream is a map of key-value pairs of the matched
-	 *         results.
+	 * element of the stream is a map of key-value pairs of the matched
+	 * results.
 	 */
 	public Stream<Map<String, String>> search(final String text) {
+		return search(text, false);
+	}
+
+	/**
+	 * Searches for a given term (<code>text</code>) in the country data. Note: this
+	 * is not fulltext search and the order of the results are based on their
+	 * appearances in the data file.
+	 *
+	 * @param text the search term
+	 * @param rank whether to calculate lexical similarity value in the range [0,1], and store it as 'rank'
+	 * @return a <code>Stream</code> instance backed by a query result set. Each
+	 * element of the stream is a map of key-value pairs of the matched
+	 * results.
+	 */
+	public Stream<Map<String, String>> search(final String text, boolean rank) {
 		if (this.selectAllStatement == null) {
 			return Stream.empty();
 		}
@@ -144,7 +157,7 @@ public class LocalityStore {
 			Connection conn = getInMemoryConnection();
 			close = UncheckedCloseable.wrap(conn);
 			PreparedStatement stmt = conn.prepareStatement(
-					this.selectAllStatement + " WHERE " + getColumnMatchingClause(SEARCH_COLUMNS, text));
+					this.selectAllStatement + " WHERE " + getColumnMatchingClause(text));
 
 			close = close.nest(stmt);
 			ResultSet resultSet = stmt.executeQuery();
@@ -157,9 +170,13 @@ public class LocalityStore {
 							try {
 								if (!resultSet.next())
 									return false;
-								action.accept(COLUMNS.stream()
+								Map<String, String> item = COLUMNS.stream()
 										.collect(Collectors.toMap(c -> c, c -> getStringFromResultSet(resultSet, c),
-												(a, b) -> b, () -> new LinkedHashMap<>())));
+												(a, b) -> b, LinkedHashMap::new));
+								if (rank) {
+									rankResult(text, item);
+								}
+								action.accept(item);
 								return true;
 							} catch (SQLException ex) {
 								throw new RuntimeException(ex);
@@ -182,9 +199,8 @@ public class LocalityStore {
 
 	/**
 	 * Counts the total occurrences of the search term.
-	 * 
-	 * @param text
-	 *            the search term
+	 *
+	 * @param text the search term
 	 * @return an integer
 	 */
 	public int count(final String text) {
@@ -193,8 +209,8 @@ public class LocalityStore {
 		}
 
 		try (Connection conn = getInMemoryConnection();
-				PreparedStatement query = conn.prepareStatement(
-						this.selectCountStatement + " WHERE " + getColumnMatchingClause(SEARCH_COLUMNS, text))) {
+			 PreparedStatement query = conn.prepareStatement(
+					 this.selectCountStatement + " WHERE " + getColumnMatchingClause(text))) {
 			final ResultSet resultSet = query.executeQuery();
 			resultSet.next();
 			return resultSet.getInt(1);
@@ -206,12 +222,18 @@ public class LocalityStore {
 
 	}
 
-	private String getColumnMatchingClause(List<String> columns, String text) {
+	private String getColumnMatchingClause(String text) {
 		String key = ("%" + text + "%").toLowerCase();
-		return columns.stream().map(c -> "LOWER(" + c + ") like '" + key + "'").collect(Collectors.joining(" OR "));
+		return LocalityStore.SEARCH_COLUMNS.stream().map(c -> "LOWER(" + c + ") like '" + key + "'").collect(Collectors.joining(" OR "));
 	}
 
 	private Connection getInMemoryConnection() throws SQLException {
 		return DriverManager.getConnection("jdbc:h2:mem:test", "sa", "sa");
+	}
+
+	private void rankResult(String searchText, Map<String, String> result) {
+		String value = RANK_COLUMNS.stream().map(result::get).collect(Collectors.joining(" "));
+		double rank = 1 - CompareUtils.calculateSimilarity(searchText, value);
+		result.put("rank", String.valueOf(rank));
 	}
 }
