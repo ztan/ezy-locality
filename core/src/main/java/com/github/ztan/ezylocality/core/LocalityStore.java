@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
@@ -20,6 +19,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import static java.util.Optional.ofNullable;
 
 /**
  * A simple Java utility for postcode lookup, based on data exported from
@@ -37,9 +38,9 @@ public class LocalityStore {
 			"longitude", "accuracy");
 
 	private static final List<String> COLUMNS_DEF =
-			Arrays.asList("country_code VARCHAR(2)", "postal_code VARCHAR(15)", "place_name VARCHAR(50)",
-					"admin_name1 VARCHAR(50)", "admin_code1 VARCHAR(15)", "admin_name2 VARCHAR(50)", "admin_code2 VARCHAR(15)",
-					"admin_name3 VARCHAR(50)", "admin_code3 VARCHAR(15)", "latitude FLOAT",
+			Arrays.asList("country_code VARCHAR(2)", "postal_code VARCHAR(15)", "place_name VARCHAR(150)",
+					"admin_name1 VARCHAR(150)", "admin_code1 VARCHAR(15)", "admin_name2 VARCHAR(150)", "admin_code2 VARCHAR(15)",
+					"admin_name3 VARCHAR(150)", "admin_code3 VARCHAR(15)", "latitude FLOAT",
 					"longitude FLOAT", "accuracy FLOAT");
 
 	private static final List<String> SEARCH_COLUMNS = Arrays.asList("postal_code", "place_name", "admin_name1",
@@ -123,11 +124,19 @@ public class LocalityStore {
 		return csvResource.toExternalForm();
 	}
 
-	private static URL getDataResource(String code) {
+	private static URL _getDataResource(String code) {
 		List<String> paths = Arrays.asList(LocalityStore.class.getPackage().getName().split("\\."));
 		String parentPath = String.join("/", paths.subList(0, paths.size() - 1));
 
 		return LocalityStore.class.getResource("/" + parentPath + "/countries/" + code + ".txt");
+	}
+
+	private static URL getDataResource(String code) {
+		if ("GB".equals(code)) {
+			return ofNullable(_getDataResource("GB_full")).orElse(_getDataResource(code));
+		} else {
+			return _getDataResource(code);
+		}
 	}
 
 	/**
@@ -139,14 +148,6 @@ public class LocalityStore {
 	 */
 	public static Set<String> supportedCountries() {
 		return ALL_SUPPORTED_COUNTRIES.stream().filter(c -> getDataResource(c) != null).collect(Collectors.toSet());
-	}
-
-	private static String getStringFromResultSet(ResultSet rs, String columnName) {
-		try {
-			return Optional.ofNullable(rs.getString(columnName)).orElse("");
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	@Override
@@ -177,6 +178,14 @@ public class LocalityStore {
 		} else {
 			return "SELECT " + columns + " FROM " + this.tableName;
 
+		}
+	}
+
+	private static String getStringFromResultSet(ResultSet rs, String columnName) {
+		try {
+			return ofNullable(rs.getString(columnName)).orElse("");
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
