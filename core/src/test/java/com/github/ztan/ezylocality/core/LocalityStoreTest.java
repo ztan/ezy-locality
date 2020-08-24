@@ -14,7 +14,7 @@ public class LocalityStoreTest {
 
 	@Test
 	void testSampleZipCodes() {
-		LocalityStore store = new LocalityStore("SAMPLE");
+		LocalityStore store = new LocalityStore("SAMPLE", true);
 		List<Map<String, String>> results = store.search("6112", true).limit(100).collect(Collectors.toList());
 
 		results.forEach(System.out::println);

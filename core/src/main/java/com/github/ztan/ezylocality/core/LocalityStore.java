@@ -36,6 +36,12 @@ public class LocalityStore {
 			"admin_name1", "admin_code1", "admin_name2", "admin_code2", "admin_name3", "admin_code3", "latitude",
 			"longitude", "accuracy");
 
+	private static final List<String> COLUMNS_DEF =
+			Arrays.asList("country_code VARCHAR(2)", "postal_code VARCHAR(15)", "place_name VARCHAR(50)",
+					"admin_name1 VARCHAR(50)", "admin_code1 VARCHAR(15)", "admin_name2 VARCHAR(50)", "admin_code2 VARCHAR(15)",
+					"admin_name3 VARCHAR(50)", "admin_code3 VARCHAR(15)", "latitude FLOAT",
+					"longitude FLOAT", "accuracy FLOAT");
+
 	private static final List<String> SEARCH_COLUMNS = Arrays.asList("postal_code", "place_name", "admin_name1",
 			"admin_code1", "admin_name2", "admin_code2", "admin_name3", "admin_code3");
 
@@ -45,6 +51,7 @@ public class LocalityStore {
 	private static final String CSV_COLUMNS = COLUMNS.stream().map(c -> "'" + c.toUpperCase() + "'")
 			.collect(Collectors.joining("||CHAR(9)||"));
 	private static final String SELECT_COLUMNS = String.join(", ", COLUMNS);
+	private static final String SELECT_COLUMNS_DEF = String.join(", ", COLUMNS_DEF);
 
 	private static final List<String> ALL_SUPPORTED_COUNTRIES = Arrays.asList("AD", "AR", "AS", "AT", "AU", "AX", "BD",
 			"BE", "BG", "BM", "BR", "BY", "CA", "CH", "CO", "CR", "CZ", "DE", "DK", "DO", "DZ", "ES", "FI", "FM", "FO",
@@ -56,6 +63,46 @@ public class LocalityStore {
 	private final String csvFile;
 	private final String selectAllStatement;
 	private final String selectCountStatement;
+	private String tableName;
+
+	/**
+	 * Constructs a locality store.
+	 *
+	 * @param countryCode    an ISO 3166-1 country code
+	 * @param createDataFile whether to create a h2 in memory table to back all queries.
+	 */
+	public LocalityStore(String countryCode, boolean createDataFile) {
+		assertDriver();
+
+
+		this.csvFile = getCsvFilePath(countryCode);
+		String _tableName = null;
+		if (createDataFile) {
+			try {
+				_tableName = "COUNTRY_" + countryCode.toUpperCase() + System.currentTimeMillis();
+				Connection conn = getInMemoryConnection();
+				final PreparedStatement statement =
+						conn.prepareStatement("CREATE TABLE " + _tableName + " (" + SELECT_COLUMNS_DEF + ") " +
+								"AS " + getSelectSql(SELECT_COLUMNS));
+				statement.execute();
+			} catch (SQLException ex) {
+				log.log(Level.SEVERE, "Cannot create data table.", ex);
+				_tableName = null;
+			}
+		}
+		this.tableName = _tableName;
+		this.selectAllStatement = getSelectSql(SELECT_COLUMNS);
+		this.selectCountStatement = getSelectSql(" COUNT(*) ");
+	}
+
+	/**
+	 * Constructs a locality store.
+	 *
+	 * @param countryCode an ISO 3166-1 country code
+	 */
+	public LocalityStore(String countryCode) {
+		this(countryCode, false);
+	}
 
 	private static void assertDriver() {
 		try {
@@ -94,32 +141,42 @@ public class LocalityStore {
 		return ALL_SUPPORTED_COUNTRIES.stream().filter(c -> getDataResource(c) != null).collect(Collectors.toSet());
 	}
 
-	private String getSelectSql(String columns) {
-		if (this.csvFile == null) {
-			return null;
-		}
-		return "SELECT " + columns + " FROM CSVREAD('" + csvFile + "', " + CSV_COLUMNS
-				+ ", 'fieldSeparator=' || CHAR(9)) ";
-	}
-
-	/**
-	 * Constructs a locality store.
-	 *
-	 * @param countryCode an ISO 3166-1 country code
-	 */
-	public LocalityStore(String countryCode) {
-		assertDriver();
-
-		this.csvFile = getCsvFilePath(countryCode);
-		this.selectAllStatement = getSelectSql(SELECT_COLUMNS);
-		this.selectCountStatement = getSelectSql(" COUNT(*) ");
-	}
-
 	private static String getStringFromResultSet(ResultSet rs, String columnName) {
 		try {
 			return Optional.ofNullable(rs.getString(columnName)).orElse("");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		dispose();
+		super.finalize();
+	}
+
+	public void dispose() {
+		if (this.tableName != null) {
+			try {
+				getInMemoryConnection().prepareStatement("DROP TABLE " + this.tableName).execute();
+				this.tableName = null;
+			} catch (SQLException ex) {
+				log.log(Level.SEVERE, "Cannot delete data table.", ex);
+			}
+		}
+	}
+
+	private String getSelectSql(String columns) {
+		if (this.csvFile == null) {
+			return null;
+		}
+
+		if (this.tableName == null) {
+			return "SELECT " + columns + " FROM CSVREAD('" + csvFile + "', " + CSV_COLUMNS
+					+ ", 'fieldSeparator=' || CHAR(9)) ";
+		} else {
+			return "SELECT " + columns + " FROM " + this.tableName;
+
 		}
 	}
 
