@@ -37,6 +37,7 @@
 		<module>countries/fo</module>
 		<module>countries/fr</module>
 		<module>countries/gb</module>
+		<module>countries/gb_full</module>
 		<module>countries/gf</module>
 		<module>countries/gg</module>
 		<module>countries/gl</module>

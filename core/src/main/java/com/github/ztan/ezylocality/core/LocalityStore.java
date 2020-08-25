@@ -1,8 +1,9 @@
 package com.github.ztan.ezylocality.core;
 
+import org.h2.jdbcx.JdbcConnectionPool;
+
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,10 +39,10 @@ public class LocalityStore {
 			"longitude", "accuracy");
 
 	private static final List<String> COLUMNS_DEF =
-			Arrays.asList("country_code VARCHAR(2)", "postal_code VARCHAR(15)", "place_name VARCHAR(150)",
-					"admin_name1 VARCHAR(150)", "admin_code1 VARCHAR(15)", "admin_name2 VARCHAR(150)", "admin_code2 VARCHAR(15)",
-					"admin_name3 VARCHAR(150)", "admin_code3 VARCHAR(15)", "latitude FLOAT",
-					"longitude FLOAT", "accuracy FLOAT");
+			Arrays.asList("country_code VARCHAR(2)", "postal_code VARCHAR(20)", "place_name VARCHAR(180)",
+					"admin_name1 VARCHAR(100)", "admin_code1 VARCHAR(20)", "admin_name2 VARCHAR(100)", "admin_code2 VARCHAR(20)",
+					"admin_name3 VARCHAR(100)", "admin_code3 VARCHAR(20)", "latitude FLOAT",
+					"longitude FLOAT", "accuracy NUMBER(1)");
 
 	private static final List<String> SEARCH_COLUMNS = Arrays.asList("postal_code", "place_name", "admin_name1",
 			"admin_code1", "admin_name2", "admin_code2", "admin_name3", "admin_code3");
@@ -64,6 +65,7 @@ public class LocalityStore {
 	private final String csvFile;
 	private final String selectAllStatement;
 	private final String selectCountStatement;
+	private final JdbcConnectionPool connectionPool;
 	private String tableName;
 
 	/**
@@ -78,6 +80,7 @@ public class LocalityStore {
 
 		this.csvFile = getCsvFilePath(countryCode);
 		String _tableName = null;
+		this.connectionPool = JdbcConnectionPool.create("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "sa");
 		if (createDataFile) {
 			try {
 				_tableName = "COUNTRY_" + countryCode.toUpperCase() + System.currentTimeMillis();
@@ -150,6 +153,14 @@ public class LocalityStore {
 		return ALL_SUPPORTED_COUNTRIES.stream().filter(c -> getDataResource(c) != null).collect(Collectors.toSet());
 	}
 
+	private static String getStringFromResultSet(ResultSet rs, String columnName) {
+		try {
+			return ofNullable(rs.getString(columnName)).orElse("");
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@Override
 	protected void finalize() throws Throwable {
 		dispose();
@@ -178,14 +189,6 @@ public class LocalityStore {
 		} else {
 			return "SELECT " + columns + " FROM " + this.tableName;
 
-		}
-	}
-
-	private static String getStringFromResultSet(ResultSet rs, String columnName) {
-		try {
-			return ofNullable(rs.getString(columnName)).orElse("");
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -294,7 +297,7 @@ public class LocalityStore {
 	}
 
 	private Connection getInMemoryConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:h2:mem:test", "sa", "sa");
+		return this.connectionPool.getConnection();
 	}
 
 	private void rankResult(String searchText, Map<String, String> result) {
