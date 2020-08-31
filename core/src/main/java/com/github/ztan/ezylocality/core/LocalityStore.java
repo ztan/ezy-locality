@@ -176,6 +176,7 @@ public class LocalityStore {
 				log.log(Level.SEVERE, "Cannot delete data table.", ex);
 			}
 		}
+		this.connectionPool.dispose();
 	}
 
 	private String getSelectSql(String columns) {
